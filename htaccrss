@@ -1,0 +1,21 @@
+# SECURITY HEADERS
+<IfModule mod_headers.c>
+    # X-Frame-Options
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Strict-Transport-Security (HSTS)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+    # X-Content-Type-Options
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Referrer-Policy
+    Header always set Referrer-Policy "no-referrer-when-downgrade"
+
+    # Permissions-Policy
+    Header always set Permissions-Policy "geolocation=(self), microphone=(self), camera=(self), payment=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self), speaker=(self), interest-cohort=()"
+</IfModule>
+
+#By including interest-cohort=(), you're explicitly opting out of FLoC. This can be a privacy-conscious decision, as it prevents your website visitors from being included in FLoC cohorts, thereby preserving their privacy.
+# Security Headers END
+  
