@@ -1,0 +1,51 @@
+# Enable URL rewriting
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Force HTTPS (uncomment to enable)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Block access to sensitive files
+<FilesMatch "\.(ini|log|sh|inc|bak|sql)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Default index file
+DirectoryIndex index.html index.php
+
+# Disable directory browsing
+Options -Indexes
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+
+# SECURITY HEADERS
+<IfModule mod_headers.c>
+    # X-Frame-Options
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Strict-Transport-Security (HSTS)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+    # X-Content-Type-Options
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Referrer-Policy
+    Header always set Referrer-Policy "no-referrer-when-downgrade"
+
+    # Permissions-Policy
+    Header always set Permissions-Policy "geolocation=(self), microphone=(self), camera=(self), payment=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self), speaker=(self), interest-cohort=()"
+</IfModule>
+# End SECURITY HEADERS
