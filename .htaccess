@@ -19,3 +19,4 @@
 #By including interest-cohort=(), you're explicitly opting out of FLoC. This can be a privacy-conscious decision, as it prevents your website visitors from being included in FLoC cohorts, thereby preserving their privacy.
 # Security Headers END
   
+Options -Indexes
